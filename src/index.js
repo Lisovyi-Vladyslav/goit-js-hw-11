@@ -34,6 +34,7 @@ const {
         return
     }
 
+           refs.gallery.innerHTML = '';
     newsApiService.fetchArticles()
         .then(articles => {    
             refs.gallery.innerHTML = '';

@@ -7,18 +7,26 @@ export default class NewsAptService {
         this.page = 1;
     }
 
-    fetchArticles() {
+     async fetchArticles() {
         const url = `https://pixabay.com/api/?key=31729330-76a93a375c4da5def12e352a3&q=${this.searchQuery}&page=${this.page}&per_page=40&image_type=photo&orientation=horizontal&safesearch=true`;
 
-        return fetch(url)
-            .then(r => r.json())
-            .then(data => {
-                // console.log(data.hits.length);
+         try {
+    const response = await fetch(url);
+         const data = await response.json();
+        this.incrementPage();
+         return data;
+  } catch (error) {
+    return Notify.failure("Oops, there is no country with that name");
+  }
+         
+            // .then(r => r.json())
+            // .then(data => {
+            //     // console.log(data.hits.length);
                 
-                this.incrementPage();
-                // console.log(data.totalHits);
-                return data;
-            }).catch(err => {return Notify.failure("Oops, there is no country with that name")});
+            //     this.incrementPage();
+            // //     // console.log(data.totalHits);
+            // //     return data;
+            // }).catch(err => {});
     }
 
     incrementPage() {
