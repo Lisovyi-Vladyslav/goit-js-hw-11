@@ -36,14 +36,15 @@ const {
 
            refs.gallery.innerHTML = '';
     newsApiService.fetchArticles()
-        .then(articles => {    
+      .then(articles => {   
+          console.log(articles.data);
             refs.gallery.innerHTML = '';
-            if (articles.hits.length === 0) {
+            if (articles.data.hits.length === 0) {
                     return Notify.failure("Oops, there is no country with that name")
             } 
             totalHits = 0;
-            totalHits += articles.hits.length;
-            renderCountryInfo(articles.hits);
+            totalHits += articles.data.hits.length;
+            renderCountryInfo(articles.data.hits);
            
             showLoadBtn();
         });
@@ -53,14 +54,14 @@ const {
 function onLoadMore() {
     newsApiService.fetchArticles()
         .then(articles => {
-            totalHits += articles.hits.length;
-             console.log(totalHits);
-            if (totalHits === articles.totalHits) {
+            totalHits += articles.data.hits.length;
+            //  console.log(totalHits);
+            if (totalHits === articles.data.totalHits) {
                 hideLoadBtn();
                 return Notify.failure("We're sorry, but you've reached the end of search results.");
             }
-            renderCountryInfo(articles.hits);
-            console.log(articles.hits);
+            renderCountryInfo(articles.data.hits);
+            // console.log(articles.hits);
 })
            
 

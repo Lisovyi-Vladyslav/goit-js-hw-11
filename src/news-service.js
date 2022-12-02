@@ -1,5 +1,5 @@
 import { Notify } from "notiflix";
-
+import axios from 'axios';
 export default class NewsAptService {
 
     constructor() {
@@ -7,14 +7,15 @@ export default class NewsAptService {
         this.page = 1;
     }
 
-     async fetchArticles() {
+    async fetchArticles() {
+        
         const url = `https://pixabay.com/api/?key=31729330-76a93a375c4da5def12e352a3&q=${this.searchQuery}&page=${this.page}&per_page=40&image_type=photo&orientation=horizontal&safesearch=true`;
 
          try {
-    const response = await fetch(url);
-         const data = await response.json();
+    const response = await axios.get(url);
+        //  console.log(response.data);
         this.incrementPage();
-         return data;
+        return response
   } catch (error) {
     return Notify.failure("Oops, there is no country with that name");
   }
